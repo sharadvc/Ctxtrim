@@ -12,6 +12,34 @@ npx ctxtrim --write    # write .cursorignore + .aiexclude to cut it
 
 ---
 
+## Quickstart
+
+No install required — `npx` runs the latest release:
+
+```bash
+cd your-repo
+npx ctxtrim              # scan: see what's bloating context (report only)
+npx ctxtrim --write      # write .cursorignore + .aiexclude to trim it
+```
+
+Example report (numbers vary by repo):
+
+```
+ctxtrim  ·  my-repo  ·  412 files
+
+  Full context load: ~1.2M tokens  (~$3.61 @ $3/M input)
+  Trimmable:         ~890k tokens (73%)  → save ~$2.67 per load
+
+  Top offenders
+    ~410k   $1.23  package-lock.json      — dependency lockfile
+    ~180k   $0.54  data/cities.json       — large json (180k tokens)
+     ~80k   $0.24  dist/                  — build / generated output directory
+
+  Run with --write to create .cursorignore / .aiexclude and cut this from context.
+```
+
+After `npx ctxtrim --write`, the last line becomes something like: `✓ .cursorignore (created, 34 patterns), .aiexclude (created, 34 patterns)`.
+
 ## Why
 
 AI coding tools re-send your context with every turn — *"a one-line question in a session that's been open all day still draws usage for the whole conversation,"* and **large context can cost 3× the tokens.** Usage dashboards (like ccusage) tell you *how much you spent* after the fact. `ctxtrim` is the other half: it tells you **what to stop sending** so the bill is smaller in the first place.
