@@ -153,6 +153,19 @@ test("clean repo (only source) reports nothing to trim", () => {
   assert.equal(s.totals.trimTokens, 0);
 });
 
+test("scanRepo rejects a file path instead of scanning cwd", () => {
+  const file = join(repo, "package-lock.json");
+  assert.throws(() => scanRepo(file), /not a directory/);
+});
+
+test("CLI rejects a file path with exit 2", () => {
+  const file = join(repo, "package-lock.json");
+  const result = spawnSync(process.execPath, [cli, file], { encoding: "utf8" });
+  assert.equal(result.status, 2, result.stderr);
+  assert.match(result.stderr, /not a directory/);
+  assert.equal(result.stdout, "");
+});
+
 test("CLI exits 0 on a clean repo with --fail-on-waste 0", () => {
   const result = spawnSync(process.execPath, [cli, join(repo, "src"), "--fail-on-waste", "0"], {
     encoding: "utf8",

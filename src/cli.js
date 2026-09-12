@@ -84,7 +84,13 @@ export function run(argv, { version }) {
     return 2;
   }
 
-  const scan = scanRepo(target, { maxTokens: o.maxTokens });
+  let scan;
+  try {
+    scan = scanRepo(target, { maxTokens: o.maxTokens });
+  } catch (err) {
+    process.stderr.write(err.message.endsWith("\n") ? err.message : `${err.message}\n`);
+    return 2;
+  }
   let wrote = null;
   if (o.write && scan.patterns.length) wrote = writeIgnores(scan.root, scan.patterns, targets);
 

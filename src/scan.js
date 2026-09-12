@@ -35,7 +35,13 @@ function fileInfo(abs, size) {
  */
 export function scanRepo(target, opts = {}) {
   const maxTokens = opts.maxTokens ?? 2000;
-  const root = existsSync(target) && statSync(target).isDirectory() ? target : ".";
+  let root = ".";
+  if (existsSync(target)) {
+    if (!statSync(target).isDirectory()) {
+      throw new Error(`ctxtrim: not a directory: ${target}`);
+    }
+    root = target;
+  }
   const files = [];
 
   const walk = (dir) => {

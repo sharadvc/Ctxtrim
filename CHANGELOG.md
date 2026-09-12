@@ -3,6 +3,13 @@
 All notable changes to this project are documented here, following
 [Keep a Changelog](https://keepachangelog.com/) and semantic versioning.
 
+## [0.1.8] - 2026-09-12
+
+### Fixed
+
+- Reject a file path (non-directory) with exit code 2 instead of silently
+  scanning the current working directory.
+
 ## [0.1.7] - 2026-09-11
 
 ### Fixed
