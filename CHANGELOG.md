@@ -3,6 +3,13 @@
 All notable changes to this project are documented here, following
 [Keep a Changelog](https://keepachangelog.com/) and semantic versioning.
 
+## [0.1.8] - 2026-09-12
+
+### Fixed
+
+- Reject unknown CLI flags (for example `--wriet`) with exit code 2 instead of
+  silently ignoring them and running report-only.
+
 ## [0.1.7] - 2026-09-11
 
 ### Fixed

@@ -177,6 +177,12 @@ test("CLI fails only when waste reaches the threshold", () => {
   assert.equal(pass.status, 0, `clean repo should pass a 50%% threshold\n${pass.stderr}`);
 });
 
+test("CLI rejects unknown flags", () => {
+  const result = spawnSync(process.execPath, [cli, repo, "--wriet"], { encoding: "utf8" });
+  assert.equal(result.status, 2, `--wriet should fail with exit 2\n${result.stderr}`);
+  assert.match(result.stderr, /ctxtrim: unknown (option|flag).*--wriet/i);
+});
+
 test("CLI rejects non-finite and negative numeric options", () => {
   const invalid = [
     ["--max-tokens", "abc"],

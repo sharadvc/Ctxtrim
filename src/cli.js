@@ -47,6 +47,7 @@ function parse(argv) {
     else if (has("--top")) o.top = Number(val());
     else if (has("--format")) o.format = val();
     else if (has("--fail-on-waste")) o.failOnWaste = Number(val());
+    else if (a.startsWith("-")) return { ...o, error: `ctxtrim: unknown option: ${a}\n` };
     else if (!a.startsWith("-")) {
       if (o.path !== null) return { ...o, error: "ctxtrim: only one path may be supplied\n" };
       o.path = a;
