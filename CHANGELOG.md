@@ -3,6 +3,12 @@
 All notable changes to this project are documented here, following
 [Keep a Changelog](https://keepachangelog.com/) and semantic versioning.
 
+## [0.1.8] - 2026-09-12
+
+### Added
+
+- Test coverage for scanning an empty directory (zero files, 0% waste).
+
 ## [0.1.7] - 2026-09-11
 
 ### Fixed

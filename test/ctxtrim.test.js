@@ -153,6 +153,19 @@ test("clean repo (only source) reports nothing to trim", () => {
   assert.equal(s.totals.trimTokens, 0);
 });
 
+test("scan of empty directory reports zero files and 0% waste", (t) => {
+  const root = mkdtempSync(join(tmpdir(), "ctxtrim-empty-dir-"));
+  t.after(() => rmSync(root, { recursive: true, force: true }));
+
+  const s = scanRepo(root);
+
+  assert.equal(s.totals.files, 0);
+  assert.equal(s.totals.totalTokens, 0);
+  assert.equal(s.totals.trimTokens, 0);
+  assert.equal(s.totals.wastePct, 0);
+  assert.deepEqual(s.patterns, []);
+});
+
 test("CLI exits 0 on a clean repo with --fail-on-waste 0", () => {
   const result = spawnSync(process.execPath, [cli, join(repo, "src"), "--fail-on-waste", "0"], {
     encoding: "utf8",
